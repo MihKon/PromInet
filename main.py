@@ -32,15 +32,9 @@ if __name__ == "__main__":
         while True:
             client.connect()
             root = client.get_root_node()
-            # print("Root node is: ", root)
-            objects = client.get_objects_node()
-            # print("Objects node is: ", objects)
 
             uri = "http://vertical.farm.ru"
             idx = client.get_namespace_index(uri)
-
-            children = root.get_children()
-            # print("Children of root is: ", children)
 
             var_temperature = root.get_child(["0:Objects", "{}:Parameters".format(idx), "{}:Temperature".format(idx)])
             var_humidity = root.get_child(["0:Objects", "{}:Parameters".format(idx), "{}:Humidity".format(idx)])
@@ -53,7 +47,7 @@ if __name__ == "__main__":
             h20_level = client.get_node(var_h20).get_value()
             illumination = client.get_node(var_light).get_value()
             time = client.get_node(var_time).get_value()
-            print(temperature, humidity, h20_level, illumination, time)
+            print("The data was received:\t", temperature, humidity, h20_level, illumination, time)
 
             payload1.update({"temperature": temperature, "humidity": humidity})
             payload2.update({"illumination": illumination})
@@ -63,7 +57,7 @@ if __name__ == "__main__":
             mqtt_client2.publish(topic, str(payload2))
             mqtt_client3.publish(topic, str(payload3))
 
-            print(str(payload1), str(payload2), str(payload3))
+            print("The data has been payload:\t", str(payload1), str(payload2), str(payload3))
 
     finally:
         client.disconnect()

@@ -33,15 +33,15 @@ server.start()
 print(f'Server has been started at {url}')
 
 try:
+
     count = 0
     while True:
         count += 1
         t = randint(15, 25)
         h = randint(50, 80)
-        # h2 = randint(0, 20)
         h2 = H20_Level.get_value() - 1
         i = randint(2500, 4000)
-        temp_time = datetime.datetime.now()
+        temp_time = datetime.datetime.now().strftime("%H:%M:%S")
         if h2 == -1:
             h2 = 20
         if count % 10 == 0:
@@ -51,7 +51,6 @@ try:
             lst = [1900, 5000, 4200, 2200, 1500, 6000]
             i = random.choice(lst)
         print(t, h, h2, i, temp_time)
-        # print(temperature, humidity, H20_Level, illumination, time, "\n")
 
         temperature.set_value(t)
         humidity.set_value(h)
@@ -59,6 +58,7 @@ try:
         illumination.set_value(i)
         time.set_value(temp_time)
 
-        sleep(2)
+        sleep(10)
+
 finally:
     server.stop()
